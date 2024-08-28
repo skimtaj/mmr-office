@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .login-container .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .login-container h2 {
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #333;
+        }
+        .signup-link {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .signup-link a {
+            color: #007bff;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="text-center">Login</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter username" name="Username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="Password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <div class="signup-link">
+                <p>Don't have an account? <a href="#">Sign up here</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

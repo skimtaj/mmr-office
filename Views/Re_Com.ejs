@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Popup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        p {
+            font-size: 15px;
+        }
+        body {
+            background-color: #3C4F77;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .popup {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .popup.show {
+            opacity: 1;
+            transform: scale(1);
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+        .icon {
+            font-size: 30px;
+            color: #70D54A;
+            margin-bottom: 10px;
+        }
+        .message {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .btn-ok {
+            background-color: #70D54A;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-ok:hover {
+            background-color: #5bbf3a;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup" id="popup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"> 
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z"/> 
+                <path d="M10.97 4.97a.235.235 0 0 0-.332 0L7 8.594 5.354 6.938a.235.235 0 0 0-.332 0 .235.235 0 0 0 0 .332l2 2a.235.235 0 0 0 .332 0l4-4a.235.235 0 0 0 0-.332z"/> 
+            </svg>
+        </div>
+        <div class="message">
+          <b>Your Registration is completed successfully.</b> </br> 
+          <p>Please save your email and password for future reference.</p>		  
+        </div>
+
+        <a class="btn-ok"  onclick="closePopup()" href="https://alfarahmission.in/our-alumni/" role="button">Ok</a>
+    </div>
+    <script>
+       
+
+        // Show the popup (for demonstration purposes)
+        window.onload = function() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+            popup.classList.add('show');
+        };
+    </script>
+</body>
+</html>

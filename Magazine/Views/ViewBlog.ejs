@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Blog Content</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #0E334C;
+            color: #ffffff;
+        }
+
+        .blog-card {
+            background-color: #081F35;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-title {
+            font-size: 2.5em;
+            color: #FFD700; /* Golden color for title */
+        }
+
+        .blog-meta {
+            font-size: 1em;
+            color: #B0C4DE; /* Light Steel Blue color for metadata */
+        }
+
+        .blog-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #D3D3D3; /* Light grey color for content */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card blog-card">
+            <div class="card-body">
+                <h1 class="card-title blog-title"><%=ReadBlog.Title%></h1>
+               
+                <hr>
+                <div class="blog-content">
+                   
+                    <%=ReadBlog.Description%> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

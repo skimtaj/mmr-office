@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Blog Site</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #070F2B;
+            color: #fff;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            background-color: #1e2a47;
+            color: white;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .btn-post {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-post:hover {
+            background-color: #218838;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .search-post-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .like-dislike-section {
+            margin-top: 10px;
+        }
+
+        .like-count,
+        .dislike-count {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Modern Blog Site</h1>
+
+        <!-- Search and Post Button Container -->
+        <div class="search-post-container">
+            <!-- Search Bar -->
+            <div class="input-group" style="flex: 1; margin-right: 10px;">
+                <input type="text" class="form-control" id="searchBar" placeholder="Search blogs...">
+            </div>
+
+            <!-- Post Button -->
+            <button type="button" class="btn btn-post">Post New Blog</button>
+        </div>
+
+        <div class="row" id="blogContainer">
+            <% AllBook.forEach(function(Magazine) { %>
+                <div class="col-md-6 col-lg-3 blog-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= Magazine.Title %>
+                            </h5>
+                            <p class="card-text">
+                                <% 
+                                    let truncatedDescription = Magazine.Description.length > 50 
+                                        ? Magazine.Description.substring(0, 50) + '...' 
+                                        : Magazine.Description;
+                                %>
+                                <%= truncatedDescription %>
+                            </p>
+
+                            <a class="btn btn-primary" href="/Blog_View/<%=Magazine._id%>" role="button">Read</a>
+                        </div>
+                    </div>
+
+                    <div class="like-dislike-section">
+                        <!-- Like Form -->
+                        <form action="/like/<%= Magazine._id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-success">
+                                Like <span class="like-count"><%= Magazine.Like %></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#" id="prev">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#" id="next">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const itemsPerPage = 4;
+            let currentPage = 1;
+
+            function showPage(page) {
+                $('.blog-item').hide();
+                $('.blog-item').each(function (index) {
+                    if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+                        $(this).show();
+                    }
+                });
+            }
+
+            function updatePagination() {
+                const totalItems = $('.blog-item').length;
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+                $('#prev').parent().toggleClass('disabled', currentPage === 1);
+                $('#next').parent().toggleClass('disabled', currentPage === totalPages);
+            }
+
+            $('#searchBar').on('keyup', function () {
+                const searchInput = $(this).val().toLowerCase();
+                $('.blog-item').each(function () {
+                    const title = $(this).find('.card-title').text().toLowerCase();
+                    const description = $(this).find('.card-text').text().toLowerCase();
+                    if (title.includes(searchInput) || description.includes(searchInput)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+
+            $('#prev').on('click', function (e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    updatePagination();
+                }
+            });
+
+            $('#next').on('click', function (e) {
+                e.preventDefault();
+                const totalItems = $('.blog-item').length;
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                    updatePagination();
+                }
+            });
+
+            // Initial load
+            showPage(currentPage);
+            updatePagination();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            min-height: 100vh;
+        }
+        .registration-form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        .form-control:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 8px rgba(106, 17, 203, 0.2);
+        }
+        .btn-primary {
+            background: #6a11cb;
+            border-color: #6a11cb;
+        }
+        .btn-primary:hover {
+            background: #2575fc;
+            border-color: #2575fc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="registration-form">
+            <h2 class="text-center mb-4">Student Registration Form</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name" name="Name" value="<%=UD.Name%>">
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="tel" class="form-control" id="mobile" placeholder="Enter your mobile number" name="Mobile" value="<%=UD.Mobile%>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" name="Email" value="<%=UD.Email%>">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="Enter your address" name="Address" value="<%=UD.Address%>">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" name="DOB" value="<%=UD.DOB%>">
+                </div>
+                
+                <div class="form-group">
+                    <label for="course">Select Course</label>
+                    <select class="form-control" id="course" name="Course" value="<%=UD.Course%>" >
+                        <option> Select a course</option>
+                        <option>Computer Science</option>
+                        <option>Business Administration</option>
+                        <option>Engineering</option>
+                        <option>Medicine</option>
+                        <option>Arts</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

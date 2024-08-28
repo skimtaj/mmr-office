@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e9ecef;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .registration-form {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        .registration-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .form-control {
+            border-radius: 25px;
+            background-color: #f8f9fa;
+        }
+
+        .btn-custom {
+            background-color: #ff5722;
+            color: #fff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        .btn-custom:hover {
+            background-color: #e64a19;
+        }
+
+        .form-group label {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #ff5722;
+        }
+
+        .form-row {
+            margin-bottom: 15px;
+        }
+
+        .custom-file-label:hover {
+            background-color: #e64a19;
+        }
+
+        .custom-file-label::after {
+            content: 'Upload Image';
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="registration-form">
+                    <h2>Student Registration Form</h2>
+                    <form method="post" onsubmit="Data(event)">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                                    name="First_Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+                                    name="Last_Name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email" name="Email">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="Phone Number"
+                                    name="Phone_Number">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" class="form-control" id="dob" name="DOB">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="category">Category</label>
+                                <select class="form-control" id="category" name="Category">
+                                    <option selected disabled>Choose...</option>
+                                    <option value="student">Student</option>
+                                    <option value="professional">Professional</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="Username">Username</label>
+                                <input type="text" class="form-control" id="Username" placeholder="Username"
+                                    name="Username">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="confirmPassword"> Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" placeholder=" Password"
+                                    name="Password">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="imageUpload">Upload Image</label>
+                                <input type="file" class="custom-file-input" id="imageUpload" name="Image">
+                                <label class="custom-file-label" for="imageUpload"></label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom btn-block">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
+
+    <script>
+        function Data(event) {
+            event.preventDefault();
+            swal({
+                icon: "success",
+                title: "Registration Complete successfully",
+                button: "Ok",
+                toast: true,
+                position: 'top'
+            });
+        }
+    </script>
+</body>
+
+</html>
