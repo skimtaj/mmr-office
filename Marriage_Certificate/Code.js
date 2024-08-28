@@ -5,6 +5,8 @@ const Admin_Regi_Model = require('../Marriage_Certificate/Models/Admin_Regi_Mode
 const db = require('../Marriage_Certificate/db');
 const { PDFDocument } = require('pdf-lib');
 const fs = require('fs/promises');
+require('dotenv').config() ; 
+
 
 
 
@@ -195,7 +197,7 @@ app.get('/Pdf/:id', async (req, res) => {
             form.getTextField('BGPs').setText(pdf_data.PS || '');
             form.getTextField('BGVillage').setText(pdf_data.Village || '');
             form.getTextField('BGPost').setText(pdf_data.Post || '');
-          
+
 
             // Save the modified PDF
             const pdfBytes = await pdfDoc.save();
@@ -217,7 +219,9 @@ app.get('/Pdf/:id', async (req, res) => {
         res.status(500).send('An error occurred while processing the PDF.');
     }
 });
-app.listen(3000, () => {
 
-    console.log('Server is connected') 
+const port = process.env.port || 3000
+app.listen(port, () => {
+
+    console.log('Server is connected')
 })
