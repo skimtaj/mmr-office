@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "Index.js",
   "scripts": {
+    "start": "node Index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sk Imtaj",
@@ -10,9 +11,19 @@
   "description": "It's an amazing package",
   "dependencies": {
     "@angular/cli": "^18.0.7",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "cookies": "^0.9.1",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "mongoose": "^8.4.5"
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "localtunnel": "^2.0.2",
+    "mongoose": "^8.4.5",
+    "multer": "^1.4.5-lts.1",
+    "pdf-lib": "^1.17.1",
+    "sweetalert": "^2.1.2"
   }
 }
