@@ -78,7 +78,10 @@
       text-transform: uppercase;
     }
 
-    .form-section.bridegroom-section,
+    .form-section.bridegroom-section {
+      background-color: #0B1047;
+    }
+
     .form-section.bride-section {
       background-color: #0B1047;
     }
@@ -91,7 +94,6 @@
       font-weight: 700;
       font-size: 16px;
       transition: all 0.3s ease;
-      margin-top: 20px; /* Adjusted top margin for larger screens */
     }
 
     .btn-primary:hover {
@@ -100,71 +102,75 @@
     }
 
     @media (max-width: 576px) {
-      .register-container {
-        padding: 10px;
-        padding-top: 20px; /* Adjusted padding-top for mobile */
-        padding-bottom: 30px;
-      }
+  .register-container {
+    padding: 10px;
+    padding-top: 30px;
+  }
 
-      .register-container h2 {
+  .register-container h2 {
     font-size: 28px;
     font-weight: 350;
   }
 
-      .btn-primary {
-        margin-top: 15px; /* Reduced top margin for mobile screens */
-        padding: 10px 20px; /* Adjusted padding for mobile screens */
-      }
+  .form-group.row > div {
+    margin-bottom: 15px;
+  }
 
-      .form-group.row > div {
-        margin-bottom: 15px;
-      }
-    }
+  .text-center {
+    margin-top: 15px; /* Decrease the margin-top for the button */
+  }
+
+  .btn-primary {
+    padding: 10px 20px; /* Adjust padding if needed for smaller screens */
+  }
+}
+
+
   </style>
 </head>
 <body>
   <div class="register-container">
-    <h2>Marriage Registration Form</h2>
+    <h2> New Registrati Form</h2>
     <form method="post">
       <!-- Bridegroom Section -->
       <div class="form-section bridegroom-section">
         <h3>Bridegroom</h3>
         <div class="form-group row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <label for="groomName">Full Name</label>
-            <input type="text" class="form-control" id="groomName" required name="Name">
+            <input type="text" class="form-control" id="groomName" required name="Name" >
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <label for="groomFatherName">Father's Name</label>
-            <input type="text" class="form-control" id="groomFatherName" required name="Father_Name">
+            <input type="text" class="form-control" id="groomFatherName" required name="Father_Name" >
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="groomVillage">Village</label>
-            <input type="text" class="form-control" id="groomVillage" required name="Village">
+            <input type="text" class="form-control" id="groomVillage" required name="Village" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="groomPost">Post</label>
-            <input type="text" class="form-control" id="groomPost" required name="Post">
+            <input type="text" class="form-control" id="groomPost" required name="Post" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="groomPS">P.S</label>
-            <input type="text" class="form-control" id="groomPS" required name="PS">
+            <input type="text" class="form-control" id="groomPS" required name="PS" >
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="groomDistrict">District</label>
-            <input type="text" class="form-control" id="groomDistrict" required name="Dist">
+            <input type="text" class="form-control" id="groomDistrict" required name="Dist" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="groomPin">Pin</label>
-            <input type="text" class="form-control" id="groomPin" required name="Pin">
+            <input type="text" class="form-control" id="groomPin" required name="Pin" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="groomDOB">Date of Birth</label>
-            <input type="text" class="form-control" id="groomDOB" required name="DOB">
+            <input type="text" class="form-control" id="groomDOB" required name="DOB" >
           </div>
         </div>
       </div>
@@ -173,50 +179,89 @@
       <div class="form-section bride-section">
         <h3>Bride</h3>
         <div class="form-group row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <label for="brideName">Full Name</label>
-            <input type="text" class="form-control" id="brideName" required name="L_Name">
+            <input type="text" class="form-control" id="brideName" required name="L_Name" >
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <label for="brideFatherName">Father's Name</label>
-            <input type="text" class="form-control" id="brideFatherName" required name="L_Father_Name">
+            <input type="text" class="form-control" id="brideFatherName" required name="L_Father_Name" >
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="brideVillage">Village</label>
-            <input type="text" class="form-control" id="brideVillage" required name="L_Village">
+            <input type="text" class="form-control" id="brideVillage" required name="L_Village" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="bridePost">Post</label>
-            <input type="text" class="form-control" id="bridePost" required name="L_Post">
+            <input type="text" class="form-control" id="bridePost" required name="L_Post" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="bridePS">P.S</label>
-            <input type="text" class="form-control" id="bridePS" required name="L_PS">
+            <input type="text" class="form-control" id="bridePS" required name="L_PS" >
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="brideDistrict">District</label>
-            <input type="text" class="form-control" id="brideDistrict" required name="L_Dist">
+            <input type="text" class="form-control" id="brideDistrict" required name="L_Dist" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="bridePin">Pin</label>
-            <input type="text" class="form-control" id="bridePin" required name="L_Pin">
+            <input type="text" class="form-control" id="bridePin" required name="L_Pin" >
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4">
             <label for="brideDOB">Date of Birth</label>
-            <input type="text" class="form-control" id="brideDOB" required name="L_DOB">
+            <input type="text" class="form-control" id="brideDOB" required name="L_DOB" >
           </div>
         </div>
       </div>
 
-      <!-- Submit Button -->
+      <!-- Marriage Details Section -->
+      <div class="form-section">
+        <h3>Marriage Details</h3>
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label for="marriageDate">Marriage Date</label>
+            <input type="text" class="form-control" id="marriageDate" required name="MD" >
+          </div>
+          <div class="col-md-4">
+            <label for="registrationDate">Registration Date</label>
+            <input type="text" class="form-control" id="registrationDate" required name="RD" >
+          </div>
+          <div class="col-md-4">
+            <label for="marriageLocation">PLace</label>
+            <input type="text" class="form-control" id="marriageLocation" required name="Place" >
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-4">
+              <label for="pageNo">Mohor</label>
+              <input type="text" class="form-control" id="pageNo" required name="Mohor" >
+            </div>
+  
+            <div class="col-md-4">
+              <label for="pageNo">Page No</label>
+              <input type="text" class="form-control" id="pageNo" required name="Page" >
+            </div>
+  
+            <div class="col-md-4">
+              <label for="pageNo">Vol No</label>
+              <input type="text" class="form-control" id="pageNo" required name="vol"  >
+            </div>
+         
+      </div>
+
       <div class="text-center">
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

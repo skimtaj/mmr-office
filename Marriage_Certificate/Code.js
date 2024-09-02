@@ -5,9 +5,7 @@ const Admin_Regi_Model = require('../Marriage_Certificate/Models/Admin_Regi_Mode
 const db = require('../Marriage_Certificate/db');
 const { PDFDocument } = require('pdf-lib');
 const fs = require('fs/promises');
-
-
-
+require('dotenv').config() ; 
 
 
 
@@ -237,33 +235,34 @@ app.get('/Pdf/:id', async (req, res) => {
     } catch (error) {
         console.log('Error:', error);
         res.status(500).send('An error occurred while processing the PDF.');
-    } 
+    }
 });
 
 
 app.get('/Edit/:id', async function (req, res) {
 
-const Edit_Data = await New_Registration_Model.findById(req.params.id) 
+    const Edit_Data = await New_Registration_Model.findById(req.params.id)
 
-    res.render('../Marriage_Certificate/Views/Edit', {Edit_Data});
+    res.render('../Marriage_Certificate/Views/Edit', { Edit_Data });
 });
 
 
 app.post('/Edit/:id', async function (req, res) {
 
-   const {Name,Father_Name,Village,Post,PS,Dist, Pin, DOB, L_Name, L_Father_Name, L_Village, L_Post, L_PS, L_Dist, L_Pin,L_DOB, MD, RD, Mohor, Place, Page, vol }= req.body
+    const { Name, Father_Name, Village, Post, PS, Dist, Pin, DOB, L_Name, L_Father_Name, L_Village, L_Post, L_PS, L_Dist, L_Pin, L_DOB, MD, RD, Mohor, Place, Page, vol } = req.body
 
 
-    await New_Registration_Model.findByIdAndUpdate(req.params.id, {Name,Father_Name,Village,Post,PS,Dist, Pin, DOB, L_Name, L_Father_Name, L_Village, L_Post, L_PS, L_Dist, L_Pin,L_DOB, MD, RD, Mohor, Place, Page, vol })  ; 
-    const EditUser = await Admin_Regi_Model.findOne({Regi_Data:req.params.id}) ; 
-    res.redirect(`/Admin_Dashboard/${EditUser._id}`) ; 
-    
- });
+    await New_Registration_Model.findByIdAndUpdate(req.params.id, { Name, Father_Name, Village, Post, PS, Dist, Pin, DOB, L_Name, L_Father_Name, L_Village, L_Post, L_PS, L_Dist, L_Pin, L_DOB, MD, RD, Mohor, Place, Page, vol });
+    const EditUser = await Admin_Regi_Model.findOne({ Regi_Data: req.params.id });
+    res.redirect(`/Admin_Dashboard/${EditUser._id}`);
+
+});
 
 
 
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
 
-    console.log('Server is connected')
+    console.log('Server is connected') 
 })
