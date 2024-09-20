@@ -2,8 +2,8 @@ const express = require('express')
 const app = express();
 app.set('view engine', 'ejs');
 const path = require('path');
-const db = require('../Certicate_Marriage/DB');
-const Admin_Signup_Model = require('../Certicate_Marriage/Models/Admin_Signup_Model');
+const db = require('../Marriage/DB')
+const Admin_Signup_Model = require('../Marriage/Models/Admin_Signup_Model')
 require('dotenv').config();
 
 const { PDFDocument } = require('pdf-lib');
@@ -23,8 +23,7 @@ app.use(bodyParser.json());
 
 const session = require('express-session');
 const flash = require('connect-flash');
-const New_Registration_Model = require('./Models/New_Registration_Model');
-
+const New_Registration_Model = require('../Marriage/Models/New_Registration_Model')
 app.use(session({
     secret: 'my_secret_key',
     resave: false,
@@ -43,7 +42,7 @@ app.get('/Dashboard/:AdminID', async function (req, res) {
     const countUser = Admin_Data.Registration.length;
     const totalUser = await New_Registration_Model.countDocuments();
 
-    res.render('../Certicate_Marriage/Views/Dashboard', { Admin_Data, countUser, totalUser })
+    res.render('../Marriage/Views/Dashboard', { Admin_Data, countUser, totalUser })
 })
 
 
@@ -51,7 +50,7 @@ app.get('/Dashboard/:AdminID', async function (req, res) {
 
 
 app.get('/Admin_Signup', function (req, res) {
-    res.render('../Certicate_Marriage/Views/Admin_Signup')
+    res.render('../Marriage/Views/Admin_Signup')
 })
 
 app.post('/Admin_Signup', async function (req, res) {
@@ -96,7 +95,7 @@ app.post('/Admin_Signup', async function (req, res) {
 
 
 app.get('/Admin_Login', function (req, res) {
-    res.render('../Certicate_Marriage/Views/Admin_Login')
+    res.render('../Marriage/Views/Admin_Login')
 })
 
 
@@ -133,7 +132,7 @@ app.get('/Dashboard/:AdminID/New_Registration', async function (req, res) {
 
     const Admin_source = await Admin_Signup_Model.findById(req.params.AdminID)
 
-    res.render('../Certicate_Marriage/Views/New_Registration', { Admin_source })
+    res.render('../Marriage/Views/New_Registration', { Admin_source })
 })
 
 
@@ -168,7 +167,7 @@ app.get('/Edit_User/:id', async function (req, res) {
         const Admin_Source = await Admin_Signup_Model.findOne({ Registration: req.params.id })
 
 
-        res.render('../Certicate_Marriage/Views/Edit_Registration', { User_Edit_Data, Admin_Source });
+        res.render('../Marriage/Views/Edit_Registration', { User_Edit_Data, Admin_Source });
 
 
     } catch (error) {
@@ -232,7 +231,7 @@ app.get('/Pdf_User/:id', async function (req, res) {
             return pdfBytes;
         }
 
-        const pdfBytes = await CreatePdf('./Certicate_Marriage/Pdf/Marriage Certificate.pdf', pdfData);
+        const pdfBytes = await CreatePdf('./Certificate_Marriage/Pdf/Marriage Certificate.pdf', pdfData);
 
 
         res.setHeader('Content-Type', 'application/pdf');

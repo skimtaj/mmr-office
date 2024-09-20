@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //const mongourl = 'mongodb://localhost:27017/Registration_certificate';
 
 
-const mongourl = 'mongodb+srv://skimtaj779:12345@marriage.aai1i.mongodb.net/?retryWrites=true&w=majority&appName=Marriage'
+const mongourl = 'mongodb+srv://thelearningworld20:12345@marriage.d88s5.mongodb.net/?retryWrites=true&w=majority&appName=Marriage'
 
 mongoose.connect(mongourl);
 
