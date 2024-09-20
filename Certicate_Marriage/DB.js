@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-const mongourl = 'mongodb://localhost:27017/Registration_certificate';
+//const mongourl = 'mongodb://localhost:27017/Registration_certificate';
+
+
+const mongourl = 'mongodb+srv://skimtaj779:12345@marriage.aai1i.mongodb.net/?retryWrites=true&w=majority&appName=Marriage'
 
 mongoose.connect(mongourl);
 

@@ -4,6 +4,7 @@ app.set('view engine', 'ejs');
 const path = require('path');
 const db = require('../Certicate_Marriage/DB');
 const Admin_Signup_Model = require('../Certicate_Marriage/Models/Admin_Signup_Model');
+require('dotenv').config();
 
 const { PDFDocument } = require('pdf-lib');
 
@@ -165,7 +166,7 @@ app.get('/Edit_User/:id', async function (req, res) {
 
         const User_Edit_Data = await New_Registration_Model.findById(req.params.id);
         const Admin_Source = await Admin_Signup_Model.findOne({ Registration: req.params.id })
-    
+
 
         res.render('../Certicate_Marriage/Views/Edit_Registration', { User_Edit_Data, Admin_Source });
 
@@ -249,7 +250,9 @@ app.get('/Pdf_User/:id', async function (req, res) {
 
 });
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
 
     console.log('Server is connected')
 })
