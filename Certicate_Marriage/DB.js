@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
-const mongourl = 'mongodb://localhost:27017/Marriage_Certificate';
-
-
+const mongourl = 'mongodb://localhost:27017/Registration_certificate';
 
 mongoose.connect(mongourl);
 
-const db = mongoose.connection; 
+const db = mongoose.connection;
 
 db.on('connected', () => {
 
@@ -22,14 +20,12 @@ db.on('error', (error) => {
 });
 
 
-
 db.on('disconnected', () => {
 
-    console.log('MongoDB disconnected'); 
+    console.log('MongoDB disconnected');
 
 });
 
 
 
 module.exports = db;
-
