@@ -4,7 +4,7 @@ app.set('view engine', 'ejs');
 const path = require('path');
 const db = require('../Marriage/DB')
 const Admin_Signup_Model = require('../Marriage/Models/Admin_Signup_Model')
-require('dotenv').config();
+
 
 const { PDFDocument } = require('pdf-lib');
 
@@ -44,8 +44,6 @@ app.get('/Dashboard/:AdminID', async function (req, res) {
 
     res.render('../Marriage/Views/Dashboard', { Admin_Data, countUser, totalUser })
 })
-
-
 
 
 
@@ -249,9 +247,9 @@ app.get('/Pdf_User/:id', async function (req, res) {
 
 });
 
-const PORT = process.env.PORT || 3000;
+//const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(3000, () => {
 
     console.log('Server is connected')
 })
