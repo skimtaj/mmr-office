@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('Header') %>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Social Dashboard - Post Cards</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            body {
+                background-color: #e9ecef;
+                padding: 0;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .profile-header {
+                background-color: #2C3E50;
+                color: white;
+                padding: 2rem;
+                text-align: center;
+                position: relative;
+            }
+
+            .profile-header img {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                border: 3px solid #fff;
+            }
+
+            .profile-header h2 {
+                margin-top: 1rem;
+            }
+
+            .profile-details {
+                margin-top: 1.5rem;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .profile-details .detail-item {
+                margin: 10px 20px;
+                display: flex;
+                align-items: center;
+                font-size: 1rem;
+            }
+
+            .profile-details .detail-item i {
+                font-size: 1.5rem;
+                margin-right: 10px;
+                color: #00A65A;
+            }
+
+            .update-profile-btn {
+                position: absolute;
+                bottom: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1;
+            }
+
+            .update-profile-btn button {
+                background: linear-gradient(45deg, #ff6f61, #ff9e2c, #ffdd57, #58cc02, #007bff, #9b59b6);
+                background-size: 400% 400%;
+                color: white;
+                border: none;
+                padding: 12px 40px;
+                border-radius: 30px;
+                font-size: 1.2rem;
+                transition: background-position 0.5s ease, box-shadow 0.3s ease;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .update-profile-btn button:hover {
+                background-position: 100% 0;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+                transform: scale(1.05);
+            }
+
+
+            @media (max-width: 768px) {
+                .profile-header img {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                .profile-details .detail-item {
+                    margin: 5px 10px;
+                    font-size: 0.9rem;
+                }
+
+                .update-profile-btn button {
+                    font-size: 1rem;
+                    padding: 8px 20px;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .profile-header {
+                    padding: 1.5rem;
+                }
+
+                .profile-header img {
+                    width: 90px;
+                    height: 90px;
+                }
+
+                .profile-details .detail-item i {
+                    font-size: 1rem;
+                }
+
+                .update-profile-btn {
+                    bottom: -20px;
+                }
+
+                .update-profile-btn button {
+                    font-size: 0.9rem;
+                    padding: 6px 18px;
+                }
+            }
+
+            /* Post Card Styles */
+            .post-card {
+                margin-top: 60px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+
+            .post-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .post-card .card-body {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                text-align: left;
+            }
+
+            .post-card img.post-image {
+                border-radius: 10px;
+                margin-bottom: 15px;
+                width: 100%;
+                height: 300px;
+            }
+
+            .user-profile {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .user-profile img {
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                border: 2px solid #007bff;
+                margin-right: 10px;
+            }
+
+            .user-profile .username {
+                font-size: 1.1rem;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .user-profile .timestamp {
+                font-size: 0.85rem;
+                color: #888;
+            }
+
+            .caption {
+                font-size: 1rem;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .icon-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .icon-container .action-icons {
+                display: flex;
+                align-items: center;
+            }
+
+            .icon-container img {
+                width: 16px;
+                height: 16px;
+                margin: 0 5px;
+                transition: transform 0.2s;
+            }
+
+            .icon-container img:hover {
+                transform: scale(1.2);
+            }
+
+            .like-icon {
+                display: flex;
+                align-items: center;
+                margin-top: 10px;
+            }
+
+            .like-icon img {
+                width: 20px;
+                height: 20px;
+                margin-right: 5px;
+            }
+
+            .action-icons a {
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="profile-header">
+            <img src="/Upload/<%=userData.Profile_Image%>" alt="Profile Picture">
+            <h2>
+                <%=userData.Name%>
+            </h2>
+
+            <div class="profile-details">
+                <div class="detail-item">
+                    <i class="bi bi-envelope"></i>
+                    <span>
+                        <%=userData.Email%>
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <i class="bi bi-telephone"></i>
+                    <span>
+                        <%=userData.Mobile%>
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <i class="bi bi-geo-alt"></i>
+                    <span>123 Main St, Cityville</span>
+                </div>
+            </div>
+
+            <div class="update-profile-btn">
+                <a href="/BrandBoost/Edit-Profile/<%=userData._id%>">
+                    <button>Update Profile</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content container-fluid">
+
+            <% if (messages.success) { %>
+                <div class="alert alert-success" id="msg">
+                    <%= messages.success %>
+                </div>
+                <% } %>
+
+                    <% if (messages.error) { %>
+                        <div class="alert alert-danger" id="msg">
+                            <%= messages.error %>
+                        </div>
+                        <% } %>
+
+
+                            <div class="row">
+
+
+
+                                <% userData.Upload.forEach(function(media) { %>
+
+
+                                    <div class="col-md-3 col-12">
+                                      
+                                        <div class="post-card card">
+                                            <div class="card-body">
+                                                <div class="user-profile">
+                                                    <div>
+                                                        <div class="username">
+                                                            <%=media.Name%>
+                                                        </div>
+                                                        <div class="timestamp"><b>Posted on:</b>
+                                                            <%=media.DateTime%>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="caption">
+                                                    <%=media.Caption%>
+                                                </p>
+                                                <img src="/Upload/<%=media.Media%>" class="post-image"
+                                                    alt="Post Image">
+                                                <div class="icon-container">
+                                                    <div class="like-icon" onclick="toggleLike(this)">
+                                                        <img src="https://img.icons8.com/ios-filled/50/007bff/like.png"
+                                                            alt="Like Icon">
+                                                        <span class="like-count">0</span>
+                                                    </div>
+
+                                                    <div class="action-icons">
+                                                        <a href="/Delete-Post/<%=media._id%>"><i
+                                                                class="fa-solid fa-trash"></i></a>
+                                                        <a href="/Edit-Post/<%=media._id%>"><i
+                                                                class="fa-solid fa-pen-to-square"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+
+
+
+        </div>
+
+        <script>
+            function toggleLike(element) {
+                var likeCountElement = element.querySelector('.like-count');
+                var currentCount = parseInt(likeCountElement.textContent);
+                likeCountElement.textContent = currentCount + 1;
+            }
+
+            const visible = () => {
+                document.getElementById('msg').style.display = 'none';
+            }
+
+            setTimeout(visible, 2000);
+        </script>
+    </body>
+
+</html>

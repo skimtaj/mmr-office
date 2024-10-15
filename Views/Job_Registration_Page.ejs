@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Registration Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #2C3E50;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: #fff;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            margin: 50px 0;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        .job-icon {
+            font-size: 70px;
+            color: #1ABC9C;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .instruction {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #f9f9f9;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            font-size: 16px;
+            color: #888;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus+label,
+        .form-group input:not(:placeholder-shown)+label,
+        .form-group select:focus+label,
+        .form-group select:not([value=""])+label,
+        .form-group textarea:focus+label,
+        .form-group textarea:not(:placeholder-shown)+label {
+            top: -10px;
+            left: 10px;
+            background: #fff;
+            padding: 0 5px;
+            font-size: 12px;
+            color: #009150;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            background: #fff;
+            border-color: #009150;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background-color: #1ABC9C;
+            color: #fff;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: red;
+        }
+
+        .footer-text {
+            margin-top: 15px;
+            color: #555;
+        }
+
+        .footer-text a {
+            color: #009150;
+            text-decoration: none;
+        }
+
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 30px 15px;
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+
+            .btn-primary {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .job-icon {
+                font-size: 65px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-container">
+        <i class="fas fa-briefcase job-icon"></i>
+        <h1>Job Registration</h1>
+
+        <% if (messages.success) { %>
+            <div class="alert alert-success" id="msg">
+                <%= messages.success %>
+            </div>
+            <% } %>
+
+                <% if (messages.error) { %>
+                    <div class="alert alert-danger" id="msg">
+                        <%= messages.error %>
+                    </div>
+                    <% } %>
+
+                        <form method="post">
+                            <div class="form-group position-relative">
+                                <input type="text" id="jobTitle" name="Job_Title" required placeholder=" ">
+                                <label for="jobTitle">Job Title</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <textarea id="description" name="Description" required placeholder=" "
+                                    rows="3"></textarea>
+                                <label for="description">Description</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <textarea id="responsibilities" name="Roles_Responsibilities" required placeholder=" "
+                                    rows="3"></textarea>
+                                <label for="responsibilities">Roles & Responsibilities</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <input type="text" id="dutyTime" name="Duty_Time" required placeholder=" ">
+                                <label for="dutyTime">Duty Time</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <input type="text" id="qualification" name="Qualification" required placeholder=" ">
+                                <label for="qualification">Qualification</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <input type="text" id="location" name="Location" required placeholder=" ">
+                                <label for="location">Location</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <input type="text" id="contactInfo" name="Contact_Info" required placeholder=" ">
+                                <label for="contactInfo">Contact Info</label>
+                            </div>
+
+                            <div class="form-group position-relative">
+                                <select id="category" name="Category" required>
+                                    <option value="" disabled selected>Select Category</option>
+                                    <option value="Technology & IT ">Technology & IT </option>
+                                    <option value="Healthcare ">Healthcare </option>
+                                    <option value="Finance & Accounting
+                                    ">Finance & Accounting
+                                    </option>
+                                    <option value="Marketing & Sales 
+                                    ">Marketing & Sales
+                                    </option>
+                                    <option value="Hospitality & Tourism 
+                                    ">Hospitality & Tourism </option>
+                                    <option value="Human Resources 
+ 
+                                    ">Human Resources
+                                    </option>
+
+                                    <option value="Media & Entertainment ">Media & Entertainment
+                                    </option>
+
+                                    <option value="Others ">Others</option>
+                                </select>
+                                <label for="category">Category</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Register</button>
+
+                            <div class="footer-text">
+                                <p><a href="/BrandBoost/Job/<%=userData._id%>">Back</a></p>
+                            </div>
+                        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const setMessage = () => {
+            document.getElementById('msg').style.display = 'none';
+        }
+
+        setTimeout(setMessage, 3000);
+    </script>
+</body>
+
+</html>
