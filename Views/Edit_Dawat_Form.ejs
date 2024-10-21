@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dawatnama Invitation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #5D9FFF, #2A2A72);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: #fff;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .profile-icon {
+            font-size: 70px;
+            color: #415FB2;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-radius: 50%;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 60px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 30px;
+            padding-left: 40px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #f9f9f9;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 12px;
+            left: 40px;
+            font-size: 16px;
+            color: #888;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus+label,
+        .form-group input:not(:placeholder-shown)+label,
+        .form-group select:focus+label {
+            top: -10px;
+            left: 40px;
+            background: #fff;
+            padding: 0 5px;
+            font-size: 12px;
+            color: #009150;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            background: #fff;
+            border-color: #009150;
+        }
+
+        .form-group .fa {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background-color: #415FB2;
+            color: #fff;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2C3E50;
+        }
+
+        .go-back {
+            margin-top: 15px;
+        }
+
+        .go-back a {
+            color: #415FB2;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 30px 15px;
+                margin-top: 40px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .profile-icon {
+                font-size: 65px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-container">
+        <i class="fas fa-handshake profile-icon"></i>
+        <h1> Edit Dawatnama</h1>
+
+        <form method="post">
+            <div class="form-group position-relative">
+                <i class="fa fa-calendar"></i>
+                <input type="date" id="date" name="Date" required placeholder="Date" value="<%=editDawat.Date%>">
+                <label for="date">Date</label>
+            </div>
+
+            <div class="form-group position-relative">
+                <i class="fa fa-map-marker-alt"></i>
+                <input type="text" id="place" name="Place" required placeholder=" " value="<%=editDawat.Place%>">
+                <label for="place">Place</label>
+            </div>
+
+            <div class="form-group position-relative">
+                <i class="fa fa-clipboard-list"></i>
+                <select id="program_type" name="Program_Type" required>
+                    <option value="" disabled selected>Select Program Type</option>
+                    <option value="Wedding" <%=editDawat.Program_Type==='Wedding' ? 'selected' :''%>> Wedding</option>
+                    <option value="Engagement" <%=editDawat.Program_Type==='Engagement' ? 'selected' :''%>>Engagement
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group position-relative">
+                <i class="fa fa-user"></i>
+                <input type="text" id="name" name="Name" required placeholder=" " value="<%=editDawat.Name%>">
+                <label for="name">Name</label>
+            </div>
+
+            <div class="form-group position-relative">
+                <i class="fa fa-phone"></i>
+                <input type="tel" id="mobile" name="Mobile" required placeholder=" " value="<%=editDawat.Mobile%>">
+                <label for="mobile">Mobile</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Edit Dawat</button>
+
+            <div class="go-back">
+                <a href="javascript:history.back();">Go Back</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

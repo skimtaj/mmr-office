@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const mongourl = 'mongodb+srv://brandboost:Skimtaj786@brandboost.883fj.mongodb.net/';
+//const mongourl = 'mongodb://localhost:27017/Dawatnama';
+
+const mongourl = 'mongodb+srv://DawatNama:Skimtaj786@cluster0.v2fcn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose.connect(mongourl);
 
@@ -25,4 +27,3 @@ db.on('disconnected', () => {
 });
 
 module.exports = db;
-
