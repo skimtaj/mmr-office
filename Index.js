@@ -256,7 +256,8 @@ app.post('/Edit-User/:id', async function (req, res) {
 
   const { Name, Mobile, Email } = req.body;
   await User_Model.findByIdAndUpdate(req.params.id, { Name, Mobile, Email });
-  userId = req.params.id
+  userId = req.params.id;
+  req.flash('success', 'Profile Update successfully')
   res.redirect('/MMR-Kazi-Office');
 })
 

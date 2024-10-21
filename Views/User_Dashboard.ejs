@@ -178,6 +178,22 @@
                 <p class="wish-message" id="greetingMessage">Hey ...</p>
                 <p class="subtext">Ready for Today? Review Your Schedule Now 👇 </p>
             </div>
+
+            <% if (messages.success) { %>
+                <div class="alert alert-success" id="msg">
+                    <%= messages.success %>
+                </div>
+                <% } %>
+
+
+                    <% if (messages.error) { %>
+                        <div class="alert alert-danger" id="msg">
+                            <%= messages.error %>
+                        </div>
+
+                        <% } %>
+
+
         </section>
 
         <!-- Data Table Section -->
@@ -260,6 +276,11 @@
                     autoWidth: false // Disable auto width calculation
                 });
             });
+
+            setTimeout(() => {
+
+                document.getElementById('msg').style.display = 'none'
+            }, 3000)
         </script>
 
     </body>
