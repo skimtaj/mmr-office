@@ -44,7 +44,7 @@ userSchema.methods.GenerateJWT = async function () {
 
     try {
 
-        const tokens = JWT.sign({ _id: this._id }, '12345', { expiresIn: '1h' });
+        const tokens = JWT.sign({ _id: this._id.toString() }, '12345', { expiresIn: '1h' });
         this.Token = this.Token.concat({ tokens: tokens });
         await this.save();
         return tokens;

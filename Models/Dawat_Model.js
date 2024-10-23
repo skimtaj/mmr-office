@@ -27,6 +27,12 @@ const dawatSchema = mongoose.Schema({
         type: String
     },
 
+    Time: {
+
+        type: String
+    },
+
+
 
 });
 

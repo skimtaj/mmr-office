@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+
 require('dotenv').config();
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -87,9 +88,10 @@ app.post('/MMR-User-Signup', async function (req, res) {
 
     const New_User_Model = new User_Model(userData);
     await New_User_Model.save();
-    const tokens = await New_User_Model.GenerateJWT();
+    const token = await New_User_Model.GenerateJWT();
+
     req.session.userId = New_User_Model._id;
-    console.log('This is signup token', tokens)
+    console.log('This is signup token', token)
     res.redirect('/MMR-Kazi-Office');
 
   }
