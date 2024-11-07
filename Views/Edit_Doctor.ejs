@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Joining Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #009150;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .form-title {
+            text-align: center;
+            color: #009150;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: #282c34;
+            font-weight: bold;
+        }
+
+        .form-control,
+        .form-select {
+            border-color: #009150;
+        }
+
+        .btn-primary {
+            background-color: #009150;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #00663f;
+        }
+
+        .go-back-link {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: #009150;
+            text-decoration: none;
+        }
+
+        .go-back-link:hover {
+            text-decoration: underline;
+            color: #00663f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container my-5">
+        <div class="form-container">
+
+            <div class="logo">LOGO</div>
+            <h2 class="form-title">Doctor Edit Form</h2>
+
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="doctorName" class="form-label">Doctor's Name</label>
+                    <input type="text" class="form-control" id="doctorName" placeholder="Enter doctor's name"
+                        name="Doctor_Name" value="<%=editDoctordata.Doctor_Name%>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="mobile" class="form-label">Mobile</label>
+                    <input type="tel" class="form-control" id="mobile" placeholder="Enter mobile number" name="Mobile"
+                        value="<%=editDoctordata.Mobile%>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email address" name="Email"
+                        value="<%=editDoctordata.Email%>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" name="DOB" value="<%=editDoctordata.DOB%>"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-select" id="gender" required name="Gender">
+                        <option value="" disabled selected>Select gender</option>
+                        <option value="male" <%=editDoctordata.Gender==='male' ? 'selected' : '' %>> Male</option>
+                        <option value="female" <%=editDoctordata.Gender==='female' ? 'selected' : '' %>>Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" rows="3" placeholder="Enter address" name="Address"
+                        required> <%=editDoctordata.Address%></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="department" class="form-label">Department</label>
+                    <select class="form-select" id="department" name="Department" required>
+                        <option value="" disabled selected>Select department</option>
+                        <option value="cardiology" <%=editDoctordata.Department==='cardiology' ? 'selected' : '' %>
+                            >Cardiology</option>
+                        <option value="dermatology" <%=editDoctordata.Department==='dermatology' ? 'selected' : '' %>
+                            >Dermatology</option>
+                        <option value="neurology" <%=editDoctordata.Department==='neurology' ? 'selected' : '' %>
+                            >Neurology</option>
+
+                        <option value="pediatrics" <%=editDoctordata.Department==='pediatrics' ? 'selected' : '' %>
+                            >Pediatrics</option>
+                        <option value="radiology" <%=editDoctordata.Department==='radiology' ? 'selected' : '' %>
+                            >Radiology</option>
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="profileImage" class="form-label">Profile Image</label>
+                    <input type="file" class="form-control" id="profileImage" accept="image/*" name="Profile_Image"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Update</button><a href="javascript:history.back()"
+                    class="go-back-link">Go Back</a>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

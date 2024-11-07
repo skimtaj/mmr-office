@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Healthcare</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            /* Light Background */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            /* Full viewport height */
+        }
+
+        .navbar {
+            background-color: #343a40;
+            /* Dark Gray */
+        }
+
+        .navbar .nav-link {
+            color: #ffffff;
+            /* White */
+        }
+
+        .navbar .nav-link:hover {
+            color: #ffc107;
+            /* Amber */
+        }
+
+        .hero-section {
+            background: linear-gradient(to right, #1e3c72, #2a69ac);
+            /* Gradient Background */
+            color: white;
+            text-align: center;
+            height: 75vh;
+            /* Set height */
+            display: flex;
+            /* Flexbox for centering */
+            flex-direction: column;
+            /* Stack items vertically */
+            justify-content: center;
+            /* Center vertically */
+            align-items: center;
+            /* Center horizontally */
+            border-bottom: 5px solid #ffc107;
+            /* Amber */
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            /* Large font size */
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            /* Medium font size */
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            /* Green */
+            border-color: #28a745;
+            font-size: 1rem;
+            /* Responsive font size */
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+            /* Darker Green */
+        }
+
+        .footer {
+            background-color: #1e3c72;
+            /* Dark Blue */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        h2 {
+            color: #1e3c72;
+            /* Dark Blue for headings */
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+                /* Smaller font size for mobile */
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+                /* Smaller font size for mobile */
+            }
+
+            .btn-primary {
+                font-size: 0.9rem;
+                /* Smaller button font size for mobile */
+            }
+
+            .navbar-toggler {
+                padding: 0.25rem 0.5rem;
+                /* Smaller padding for toggle button */
+                font-size: 1.25rem;
+                /* Increase toggle button font size */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section h1 {
+                font-size: 2rem;
+                /* Even smaller for extra small screens */
+            }
+
+            .hero-section p {
+                font-size: 0.9rem;
+                /* Smaller font size for extra small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Modern Healthcare</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="/penrohospital/appponment">Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin-dashboard">Admin Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/doctor-login">Doctor Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>Welcome to Modern Healthcare</h1>
+            <p>Your health, our priority. Providing compassionate and innovative care.</p>
+            <a href="/penrohospital/appponment" class="btn btn-primary btn-lg">Make Appointment</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Modern Healthcare. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

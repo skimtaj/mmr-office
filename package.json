@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "Index.js",
   "scripts": {
-    "start": "npx nodemon index.js",
+    "start": "npx nodemon ./Index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sk Imtaj",
@@ -25,6 +25,7 @@
     "mongoose": "^8.4.5",
     "multer": "^1.4.5-lts.1",
     "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.15",
     "pdf-lib": "^1.17.1",
     "sweetalert": "^2.1.2"
   }

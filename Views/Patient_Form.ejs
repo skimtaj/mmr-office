@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Patient Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e8f0fe;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 650px;
+            margin: auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-weight: bold;
+            color: #00796b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-control {
+            height: 45px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #00796b;
+            box-shadow: 0 0 5px rgba(0, 121, 107, 0.2);
+        }
+
+        .btn-submit {
+            background-color: #00796b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #005f56;
+        }
+
+        .btn-back {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #c62828;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Patient Form</h2>
+        </div>
+        <form method="post">
+            <div class="form-group">
+                <label for="patient-name">Patient Name</label>
+                <input type="text" class="form-control" id="patient-name" placeholder="Enter Patient Name" name="Patient_Name" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile</label>
+                <input type="tel" class="form-control" id="mobile" placeholder="Enter Mobile Number" name="Mobile" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" required name="Gender">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" required name="DOB">
+            </div>
+            <div class="form-group">
+                <label for="date-field">Date</label>
+                <input type="date" class="form-control" id="date-field" required disabled name="Date">
+            </div>
+            <div class="form-group">
+                <label for="medical-history">Medical History</label>
+                <textarea class="form-control" rows="3" id="medical-history" placeholder="Enter Medical History" name="Medical_History"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="medications">Medications</label>
+                <textarea class="form-control" rows="3" id="medications" placeholder="Enter Medications" name="Medications"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="follow-up">Follow-up Date</label>
+                <input type="date" class="form-control" id="follow-up" name="Follow_up">
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-submit" onclick="send()">Submit</button>
+                <button type="button" class="btn btn-back" onclick="window.history.back()">Back</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const dateField = document.getElementById('date-field');
+        const today = new Date().toISOString().split('T')[0];
+        dateField.value = today;
+
+        const send = () => {
+            dateField.disabled = false;
+        }
+    </script>
+</body>
+
+</html>
