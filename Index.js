@@ -8,6 +8,7 @@ const db = require('./db');
 const bcryptjs = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
+require('dotenv').config();
 
 
 const { PDFDocument } = require('pdf-lib');
@@ -461,8 +462,9 @@ app.get('/patient-report/:id', async function (req, res) {
 
 });
 
+const PORT = process.env.PORT || 3000
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
 
   console.log('Server is connected')
 })
