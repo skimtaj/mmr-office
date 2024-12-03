@@ -1,470 +1,572 @@
 const express = require('express')
 const app = express();
-const Admin_Model = require('./Models/Admin_Model');
-const Doctor_Model = require('./Models/Doctor_Model');
-const Appoinment_Model = require('./Models/Appoinment_Model');
-const Patient_Model = require('./Models/Patient_Model');
-const db = require('./db');
+const path = require('path');
+const session = require('express-session');
+const flash = require('connect-flash');
+const multer = require('multer');
+const JWT = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const bcryptjs = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const moment = require('moment');
 require('dotenv').config();
 
 
-const { PDFDocument } = require('pdf-lib');
-const fs = require('fs/promises');
 
 
-const path = require('path');
-app.set('view engine', 'ejs');
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
-app.use('/Upload', express.static(path.join(__dirname, 'Upload')));
+app.use('./upload', express.static(path.join(__dirname, 'upload')));
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
 
-const session = require('express-session');
-const flash = require('connect-flash');
+const admin_signup_model = require('./models/admin_signup_model');
+const notice_model = require('./models/notice_model');
+const donator_model = require('./models/donator_model');
+const db = require('./DB');
+const payment_model = require('./models/payment_model');
 
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
 }))
 
-app.use(flash())
+app.use(flash());
 
 app.use((req, res, next) => { res.locals.messages = req.flash(); next(); });
 
-
-const multer = require('multer');
+app.use(cookieParser());
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './Upload')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const fileExtension = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
-  }
-});
+    limits: { fileSize: 10000000 },
+    destination: function (req, file, cb) {
+        cb(null, './upload')
+    },
 
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const fileExtension = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
+    }
+})
 
-
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage })
 
 
 const auth = (req, res, next) => {
 
-  if (!req.session.adminId) {
+    const adminToken = req.cookies.adminToken;
+    if (!adminToken) {
+        return res.redirect('/admin-login')
+    }
 
-    return res.redirect('/admin-login')
-  }
-
-  next()
+    const verified = JWT.verify(adminToken, '12345');
+    req.adminId = verified._id
+    next()
 }
 
-const Auth = (req, res, next) => {
 
-  if (!req.session.doctorId) {
-    return res.redirect('/doctor-login')
-  }
-  next();
+const authen = (req, res, next) => {
+
+    const token = req.cookies.donatorToken;
+    if (!token) {
+
+        return res.redirect('/donator-login')
+    }
+
+    const verified = JWT.verify(token, '12345');
+    req.donatorId = verified._id;
+    next()
 }
-
 
 
 app.get('/admin-signup', function (req, res) {
-  res.render('../Views/Admin_Signup')
+    res.render('../views/admin-signup')
 })
 
 app.post('/admin-signup', upload.single('Profile_Image'), async function (req, res) {
 
-  try {
-
     const adminData = req.body;
     adminData.Profile_Image = req.file.filename;
-    const adminEmail = await Admin_Model.findOne({ Email: adminData.Email });
-    const adminMobile = Admin_Model.findOne({ Mobile: adminData.Mobile });
+
+    const adminEmail = await admin_signup_model.findOne({ Email: adminData.Email });
+    const adminMobile = await admin_signup_model.findOne({ Mobile: adminData.Mobile });
 
     if (adminEmail) {
-      req.flash('error', 'Email already exist');
-      return res.redirect('/admin-signup')
+
+        req.flash('error', 'Email alreday exist ');
+        return res.redirect('/admin-signup');
     }
 
     else if (adminMobile) {
-      req.flash('error', 'Mobile already exist');
-      return res.redirect('/admin-signup')
-    }
 
-    else if (adminData.Mobile.length !== 10) {
-
-      req.flash('error', 'Mobile number must be 10 charecters ');
-      return res.redirect('/admin-signup')
+        req.flash('error', 'Mobile number alreday exist ');
+        return res.redirect('/admin-signup');
     }
 
     else {
-      const newAdminmodel = new Admin_Model(adminData);
-      await newAdminmodel.save();
-      const tokens = await newAdminmodel.generateJWT();
-      req.session.adminId = newAdminmodel._id;
-      return res.redirect('/admin-dashboard')
+
+        const new_admin_signup = admin_signup_model(adminData);
+        await new_admin_signup.save();
+        const token = await new_admin_signup.GenerateJWT();
+
+        res.cookie('adminToken', token), {
+
+            httpOnly: true,
+            secure: true,
+            maxAge: 365 * 24 * 60 * 60 * 1000,
+        }
+        return res.redirect('/admin-dashboard')
     }
-
-  }
-
-  catch (error) {
-
-    console.log('This is signup error', error)
-
-  }
-
 })
 
 app.get('/admin-login', function (req, res) {
-  res.render('../Views/Admin_Login')
+
+    res.render('../views/admin-login')
 })
 
 app.post('/admin-login', async function (req, res) {
+    const { Email, Password } = req.body;
 
-  const { Email, Password } = req.body;
+    const loginEmail = await admin_signup_model.findOne({ Email: Email });
+    if (loginEmail) {
 
-  const adminLoginemail = await Admin_Model.findOne({ Email })
+        const matchPassword = await bcryptjs.compare(Password, loginEmail.Password);
+        if (matchPassword) {
 
-  if (adminLoginemail) {
-    const matchPassword = await bcryptjs.compare(Password, adminLoginemail.Password);
+            const token = await loginEmail.GenerateJWT();
+            res.cookie('adminToken', token, {
 
-    if (matchPassword) {
-      const tokens = await adminLoginemail.generateJWT();
-      req.session.adminId = adminLoginemail._id;
-      return res.redirect('/admin-dashboard')
+                httpOnly: true,
+                secure: true,
+                maxAge: 365 * 24 * 60 * 60 * 1000,
+            })
+
+            return res.redirect('/admin-dashboard')
+        }
+
+        else {
+
+            req.flash('error', 'Incorrect Email Password');
+            return res.redirect('/admin-login')
+        }
+
     }
 
     else {
-      req.flash('error', 'Incorrect Email or Password');
-      return res.redirect('/admin-login')
-    }
-  }
 
-  else {
-    req.flash('error', 'Invalid login details ');
-    return res.redirect('/admin-login')
-  }
+        req.flash('error', 'Invalid login details');
+        return res.redirect('/admin-login')
+
+    }
 
 })
+
 
 app.get('/admin-dashboard', auth, async function (req, res) {
 
-  const adminID = req.session.adminId;
-  const adminData = await Admin_Model.findById(adminID);
-  const appoinment = await Appoinment_Model.find();
-  const appoinmentCount = appoinment.length;
-  const doctor = adminData.Doctor.length;
+    const adminID = req.adminId;
+    const adminSourse = await admin_signup_model.findById(adminID);
+    const donator = await donator_model.find();
 
+    const totalDonator = donator.length;
 
-  res.render('../Views/Admin_Dashboard', { adminData, appoinmentCount, doctor, appoinment })
-})
-
-
-app.get('/admin-dashboard/profile/:id', async function (req, res) {
-
-  const adminData = await Admin_Model.findById(req.params.id)
-
-  res.render('../Views/Admin_Profile.ejs', { adminData })
-})
-
-
-
-app.get('/admin-dashboard/profile/edit-profile/:id', async function (req, res) {
-
-  const adminData = await Admin_Model.findById(req.params.id)
-
-  res.render('../Views/Edit_Admin.ejs', { adminData })
-})
-
-
-
-app.post('/admin-dashboard/profile/edit-profile/:id', upload.single('Profile_Image'), async function (req, res) {
-
-  try {
-    const { Name, Mobile, Email } = req.body;
-    const Profile_Image = req.file.filename;
-    const editAdmin = await Admin_Model.findByIdAndUpdate(req.params.id, { Name, Mobile, Email, Profile_Image });
-    req.session.adminId = editAdmin._id;
-    return res.redirect('/admin-dashboard')
-  }
-
-  catch (error) {
-
-    console.log(' This is File uploading error', error)
-  }
-
-})
-
-
-
-app.get('/admin-dashboard/:id/new-doctor', async function (req, res) {
-
-  const adminData = await Admin_Model.findById(req.params.id)
-
-  res.render('../Views/Doctor_Join_Form.ejs', { adminData })
-})
-
-
-
-app.post('/admin-dashboard/:id/new-doctor', upload.single('Profile_Image'), async function (req, res) {
-
-  const doctorData = req.body;
-  doctorData.Profile_Image = req.file.filename;
-  const New_Doctor_Model = new Doctor_Model(doctorData);
-  await New_Doctor_Model.save();
-
-  const connect = await Admin_Model.findById(req.params.id);
-  connect.Doctor.push(New_Doctor_Model._id);
-  await connect.save();
-
-  req.flash('success', 'Doctor added successfully')
-
-  return res.redirect(`/admin-dashboard/${connect._id}/doctors`)
-
-})
-
-app.get('/admin-dashboard/:id/doctors', async function (req, res) {
-  const adminData = await Admin_Model.findById(req.params.id).populate('Doctor');
-  res.render('../Views/Doctor_List.ejs', { adminData })
-})
-
-app.get('/admin-dashboard/delete-doctor/:id', async function (req, res) {
-
-  await Doctor_Model.findByIdAndDelete(req.params.id);
-  const deleteDoctorsource = await Admin_Model.findOne({ Doctor: req.params.id });
-  req.flash('success', 'New Doctor added successfully')
-  return res.redirect(`/admin-dashboard/${deleteDoctorsource._id}/doctors`);
-})
-
-
-app.get('/admin-dashboard/edit-doctor/:id', async function (req, res) {
-
-  const editDoctordata = await Doctor_Model.findById(req.params.id)
-
-  res.render('../Views/Edit_Doctor.ejs', { editDoctordata })
-})
-
-app.post('/admin-dashboard/edit-doctor/:id', upload.single('Profile_Image'), async function (req, res) {
-
-  const { Doctor_Name, Mobile, Email, DOB, Department, Gender, Address } = req.body;
-  Profile_Image = req.file.filename;
-  await Doctor_Model.findByIdAndUpdate(req.params.id, { Doctor_Name, Mobile, Email, DOB, Department, Gender, Address, Profile_Image });
-
-  const updateAdmin = await Admin_Model.findOne({ Doctor: req.params.id })
-  return res.redirect(`/admin-dashboard/${updateAdmin._id}/doctors`)
-
-})
-
-
-app.get('/penrohospital/appponment', async function (req, res) {
-
-  const doctorList = await Doctor_Model.find();
-  res.render('../Views/Appoinment_Form.ejs', { doctorList })
-})
-
-
-
-app.post('/penrohospital/appponment', async function (req, res) {
-
-  const appoinmentData = req.body;
-  const New_Appoinment_Model = new Appoinment_Model(appoinmentData);
-  await New_Appoinment_Model.save();
-
-  const doctorId = New_Appoinment_Model.Doctor;
-
-
-  const connectWithdoctor = await Doctor_Model.findById(doctorId);
-  connectWithdoctor.Appoinment.push(New_Appoinment_Model._id);
-  await connectWithdoctor.save();
-  res.send('Apponment success');
-
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: "skimtaj779@gmail.com",
-      pass: 'qahj ocox shtp dlog',
-    }
-  });
-
-
-  const mailOptions = {
-    from: 'skimtaj779@gmail.com',
-    to: connectWithdoctor.Email,
-    subject: 'Appoinment Mail',
-    text: ` A new patient is requiesting for an appoinment. 
-        Patient Name : ${New_Appoinment_Model.Patient_Name},
-        Mobile : ${New_Appoinment_Model.Mobile}`
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-})
-
-app.get('/penrohospital', async function (req, res) {
-
-
-  res.render('../Views/Penro_Hospital.ejs')
-})
-
-
-app.get('/Logout', function (req, res) {
-
-  req.session.destroy(() => {
-
-    return res.redirect('/admin-login')
-  })
-})
-
-
-
-app.get('/penrohospital/doctor-profile', Auth, async function (req, res) {
-  const DoctorID = req.session.doctorId;
-  const doctorData = await Doctor_Model.findById(DoctorID).populate(['Appoinment', 'Patient ']);
-  const today = moment().format('YYYY-MM-DD');
-  const todaPatient = doctorData.Appoinment.filter(patient => patient.Appointment_Date === today)
-
-  res.render('../Views/Doctor_Profile.ejs', { doctorData, todaPatient, DoctorID })
-})
-
-
-app.get('/doctor-login', async function (req, res) {
-
-  res.render('../Views/Doctor_Login.ejs')
+    res.render('../views/admin_dashboard', { adminSourse, totalDonator })
 });
 
 
-app.post('/doctor-login', async function (req, res) {
 
-  const { Email, Password } = req.body;
-  const doctorEmail = await Doctor_Model.findOne({ Email });
-  if (doctorEmail) {
+app.get('/admin-edit', auth, async function (req, res) {
 
-    const matchPassword = await bcryptjs.compare(Password, doctorEmail.Password);
-    if (matchPassword) {
-      const token = await doctorEmail.generateJDW();
-      console.log('This is Doctor login Token ', token)
-      req.session.doctorId = doctorEmail._id;
-      res.redirect("/penrohospital/doctor-profile")
+    const adminId = req.adminId;
+    const editAdmin = await admin_signup_model.findById(adminId)
+    res.render('../views/edit_admin', { editAdmin });
+})
+
+app.post('/admin-edit', auth, upload.single('Profile_Image'), async function (req, res) {
+
+    const { Name, Mobile, Email } = req.body;
+    const adminID = req.adminId;
+    let Profile_Image;
+
+    if (req.file) {
+        Profile_Image = req.file.filename
+    }
+
+    await admin_signup_model.findByIdAndUpdate(adminID, { Name, Mobile, Email, Profile_Image });
+    req.flash('success', 'Edit Admin successfully')
+    return res.redirect('/admin-dashboard')
+
+})
+
+
+app.get('/admin-dashboard/notice', auth, async function (req, res) {
+
+    const adminID = req.adminId;
+    const adminSource = await admin_signup_model.findById(adminID).populate('Notice')
+    res.render('../views/notice_dashboard', { adminSource });
+})
+
+app.get('/admin-dashboard/notice/add-notice', auth, async function (req, res) {
+
+    res.render('../views/notice_form');
+})
+
+app.post('/admin-dashboard/notice/add-notice', upload.single('Notice_Pdf'), auth, async function (req, res) {
+
+    const noticeData = req.body;
+    noticeData.Notice_Pdf = req.file.filename;
+    const new_notice_model = notice_model(noticeData);
+    await new_notice_model.save();
+
+    const adminID = req.adminId;
+
+    const noticeConnect = await admin_signup_model.findById(adminID);
+    noticeConnect.Notice.push(new_notice_model._id);
+    await noticeConnect.save();
+    req.flash('success', 'Notice published successfully');
+    return res.redirect('/admin-dashboard/notice')
+})
+
+
+app.get('/notice-download/:id', async function (req, res) {
+
+    const noticePdf = await notice_model.findById(req.params.id);
+    const pdfpath = path.join(__dirname, 'Upload', noticePdf.Notice_Pdf);
+
+    res.download(pdfpath, (err) => {
+        if (err) {
+            return res.status(404).send('File not found');
+        }
+    });
+
+})
+
+
+app.get('/delete-notice/:id', async function (req, res) {
+
+    await notice_model.findByIdAndDelete(req.params.id);
+    req.flash('success', 'Notice delete successfully')
+    return res.redirect('/admin-dashboard/notice');
+
+
+})
+
+
+app.post('/donator-form', upload.single('Profile_Image'), auth, async function (req, res) {
+
+    const donatorData = req.body;
+    donatorData.Profile_Image = req.file.filename;
+
+    const donatorEmail = await donator_model.findOne({ Email: donatorData.Email });
+    const donatorMobile = await donator_model.findOne({ Mobile: donatorData.Mobile });
+
+    if (donatorEmail) {
+
+        req.flash('error', 'Email already exist');
+        return res.redirect('/donator-form');
+    }
+
+    if (donatorMobile) {
+        req.flash('error', 'Mobile number already exist');
+        return res.redirect('/donator-form');
+    }
+
+    else {
+        const new_donator_model = donator_model(donatorData);
+        await new_donator_model.save();
+        res.send('Registration complete successfully');
+    }
+})
+
+
+app.get('/admin-dashboard/donator', auth, async function (req, res) {
+
+    const donatorSource = await donator_model.find();
+    res.render('../views/donator', { donatorSource });
+})
+
+app.get('/donator-reject/:id', async function (req, res) {
+
+    const deleteDonator = await donator_model.findByIdAndDelete(req.params.id);
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'thelearningworld20@gmail.com',
+            pass: 'lejp nhlb tpex vlay'
+        }
+    });
+
+    const mailOptions = {
+        from: 'thelearningworld20@gmail.com',
+        to: deleteDonator.Email,
+        subject: 'Membership Rejected ',
+        text: `Dear ${deleteDonator.Name} ! We are reject you form our DPS Community for breaking rules and regulation. For Detials enquire You may call : 7797593863`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+    req.flash('success', 'Donator rejected successfully');
+    res.redirect('/admin-dashboard/donator')
+})
+
+
+app.get('/donator-form', async function (req, res) {
+
+    res.render('../views/donator-signup');
+})
+
+
+app.get('/donator-login', async function (req, res) {
+
+
+    res.render('../views/donator-login');
+})
+
+
+app.post('/donator-login', async function (req, res) {
+
+    const { Email, Password } = req.body;
+
+    const donatorEmail = await donator_model.findOne({ Email: Email });
+
+
+    if (donatorEmail) {
+
+        const matchPassword = await bcryptjs.compare(Password, donatorEmail.Password);
+        if (matchPassword) {
+
+            const token = await donatorEmail.GenerateJWT();
+
+            res.cookie('donatorToken', token, {
+
+                httpOnly: true,
+                secure: true,
+                maxAge: 365 * 24 * 60 * 60 * 1000,
+            })
+
+
+            return res.redirect('/donator-dashboard')
+
+        }
+
+        else {
+
+            req.flash('error', 'Incorrect Email or Password ');
+            return res.redirect('/donator-login')
+        }
     }
 
     else {
 
-      req.flash('error', 'Incorrect Email or Password');
-      return res.redirect("/doctor-login")
-    }
-  }
-
-  else {
-    req.flash('error', 'Invalid login details');
-    return res.redirect("/doctor-login")
-  }
-
-});
-
-
-app.get('/penrohospital/doctor-profile/:id/patient-form', async function (req, res) {
-
-
-  res.render('../Views/Patient_Form.ejs')
-});
-
-app.post('/penrohospital/doctor-profile/:id/patient-form', async function (req, res) {
-
-  const patientData = req.body;
-  const New_Patiend_Model = new Patient_Model(patientData);
-  await New_Patiend_Model.save();
-
-  const connectDoctor = await Doctor_Model.findById(req.params.id)
-  connectDoctor.Patient.push(New_Patiend_Model._id);
-  await connectDoctor.save();
-  return res.redirect('/penrohospital/doctor-profile')
-
-});
-
-
-app.get('/admin-dashboard/:id/patint-list', async function (req, res) {
-  const adminData = await Admin_Model.findById(req.params.id);
-
-  res.render('../Views/Patiend_List.ejs', { adminData })
-});
-
-app.get('/accept/:id', async function (req, res) {
-
-  const acceptData = await Appoinment_Model.findById(req.params.id);
-  acceptData.Status = 'Accept'
-  await acceptData.save();
-
-  return res.redirect('/admin-dashboard');
-
-
-});
-
-
-app.get('/reject/:id', async function (req, res) {
-
-  const rejectData = await Appoinment_Model.findById(req.params.id);
-  rejectData.Status = 'Reject'
-  await rejectData.save();
-  return res.redirect('/admin-dashboard');
-
-});
-
-
-app.get('/patient-report/:id', async function (req, res) {
-
-  try {
-
-    const patientReport = await Patient_Model.findById(req.params.id)
-    console.log(patientReport);
-
-    async function CreatePdf(input, patientReport) {
-      const existingPdfBytes = await fs.readFile(input);
-      const pdfDoc = await PDFDocument.load(existingPdfBytes);
-      const form = pdfDoc.getForm();
-
-      form.getTextField('Patient_Name').setText(patientReport.Patient_Name || '');
-      form.getTextField('Gender').setText(patientReport.Gender || '');
-      form.getTextField('DOB').setText(patientReport.DOB || '');
-      form.getTextField('Date').setText(patientReport.Date || '');
-      form.getTextField('Medical_History').setText(patientReport.Medical_History || '');
-      form.getTextField('Medications').setText(patientReport.Medications || '');
-
-      const pdfBytes = await pdfDoc.save();
-      return pdfBytes;
+        req.flash('error', 'Invalid Login details  ');
+        return res.redirect('/donator-login')
     }
 
-    const pdfBytes = await CreatePdf('./Prescription/Doctor Prescription (1) (1).pdf', patientReport);
 
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="Modified_Report.pdf"');
-    res.end(pdfBytes);
-
-  } catch (error) {
-    console.log('Error:', error);
-    res.status(500).send('An error occurred while processing the PDF.');
-  }
-
-
-});
-
-const PORT = process.env.PORT || 3000
-
-app.listen(PORT, () => {
-
-  console.log('Server is connected')
+    res.render('../views/donator-login');
 })
+
+app.get('/donator-dashboard', authen, async function (req, res) {
+
+    const donatorID = req.donatorId;
+    const donatorSource = await donator_model.findById(donatorID).populate('Payment');
+    const notice = await notice_model.find();
+
+    res.render('../views/donator-dashboard', { donatorSource, notice });
+});
+
+app.get('/edit-donator', authen, async function (req, res) {
+
+    const donatorID = req.donatorId;
+    const donatorSource = await donator_model.findById(donatorID)
+    res.render('../views/edit-donator', { donatorSource });
+});
+
+app.post('/edit-donator', upload.single('Profile_Image'), authen, async function (req, res) {
+
+    const donatorID = req.donatorId;
+
+    const { Name, Mobile, Email, Passing_Year } = req.body;
+    let Profile_Image;
+
+    if (req.file) {
+
+        Profile_Image = req.file.filename;
+    }
+
+    await donator_model.findByIdAndUpdate(donatorID, { Name, Mobile, Email, Passing_Year, Profile_Image });
+    req.flash('success', 'Edit profile successfully');
+    return res.redirect('/donator-dashboard');
+
+});
+
+
+app.get('/donator-dashboard/donate-form', authen, async function (req, res) {
+
+    const donatorID = req.donatorId;
+    const donatorSource = await donator_model.findById(donatorID)
+
+    res.render('../views/donate-form', { donatorSource });
+});
+
+app.post('/donator-dashboard/donate-form', upload.single('Payment_Proof'), authen, async function (req, res) {
+
+
+    const paymentData = req.body;
+    paymentData.Payment_Proof = req.file.filename;
+
+    if (paymentData.Pay_Amount < 30) {
+
+        req.flash('error', 'sorry ! you have to pay minimum 30 rupees');
+        return res.redirect('/donator-dashboard/donate-form')
+    }
+
+    else {
+
+        const new_payment_model = payment_model(paymentData);
+        await new_payment_model.save();
+        const donatorID = req.donatorId;
+        const donatiorConncet = await donator_model.findById(donatorID);
+        donatiorConncet.Payment.push(new_payment_model._id);
+        await donatiorConncet.save();
+
+
+        const adminSource = await admin_signup_model.find();
+        const adminEmail = adminSource.map((admin) => admin.Email.split(','))
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'thelearningworld20@gmail.com ',
+                pass: 'gzpg nqjs vfwx oudu'
+            }
+        });
+
+        var mailOptions = {
+            from: 'thelearningworld20@gmail.com',
+            to: adminEmail,
+            subject: 'New Payment form DPS Community',
+            text: ` Name : ${new_payment_model.Name}, 
+            Mobile : ${new_payment_model.Mobile}, 
+            Payment Month : ${new_payment_model.Pay_Month}`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+
+
+        req.flash('success', 'Payment successfull');
+        return res.redirect('/donator-dashboard');
+    }
+});
+
+
+app.get('/payment-accept/:id', async function (req, res) {
+
+    const paymentSource = await payment_model.findById(req.params.id);
+    paymentSource.Status = 'Paid'
+    await paymentSource.save();
+
+    req.flash('success', 'Payment verified successfully');
+    res.redirect('/admin-dashboard/donator')
+
+});
+
+
+
+app.get('/donator-dashboard/donator/payment-report/:id', auth, async function (req, res) {
+
+    const donator = await donator_model.findById(req.params.id).populate('Payment');
+    res.render('../views/donator-payment', { donator });
+
+
+});
+
+
+app.get('/forget-password', function (req, res) {
+
+
+    res.render('../views/forget-password-email')
+})
+
+app.post('/forget-password', async function (req, res) {
+
+    const forgetPasswordemail = req.body;
+    const donatorSource = await donator_model.findOne({ Email: forgetPasswordemail.Email })
+
+    if (donatorSource) {
+
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'thelearningworld20@gmail.com',
+                pass: 'gzpg nqjs vfwx oudu'
+            }
+        });
+
+        const mailOptions = {
+            from: 'thelearningworld20@gmail.com',
+            to: donatorSource.Email,
+            subject: 'Reset Password ',
+            text: `Please reset your password by clicking the following link: http://localhost:3000/reset-password/${donatorSource._id}`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        req.flash('success', 'Please check your Email');
+        return res.redirect('/forget-password')
+    }
+
+    else {
+
+        req.flash('error', 'You are not Donator');
+        return res.redirect('/forget-password')
+    }
+
+})
+
+app.get('/reset-password/:id', function (req, res) {
+
+    res.render('../views/reset-password')
+});
+
+app.post('/reset-password/:id', async function (req, res) {
+    const { Email, Password } = req.body;
+    const resetPassword = await donator_model.findOne({ Email: Email });
+
+    resetPassword.Password = Password;
+    await resetPassword.save();
+    res.send('Password Update Successfully')
+
+})
+
+
+const port = process.env.PORT
+
+app.listen(port, () => {
+
+    console.log('Server is connected');
+})  

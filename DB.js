@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-// const mongourl = 'mongodb://localhost:27017/Hospital_Management';
+const mongourl = 'mongodb+srv://dpsdatabase:Skimtaj786@dps.wwxxg.mongodb.net/'
 
-const mongourl = 'mongodb+srv://imtajdatabase:e5g1oAqkKh7NhD2o@hospitalmanagement.qo1uh.mongodb.net/?retryWrites=true&w=majority&appName=hospitalmanagement'
+//const mongourl = 'mongodb://localhost:27017/DPS_Project';
 
 mongoose.connect(mongourl);
 

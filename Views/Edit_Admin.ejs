@@ -190,36 +190,35 @@
                         <form method="post" enctype="multipart/form-data">
                             <div class="form-group position-relative">
                                 <i class="fa fa-user"></i>
-                                <input type="text" id="name" name="Name" required placeholder=" "
-                                    value="<%=adminData.Name%>">
+                                <input type="text" id="name" name="Name" placeholder=" " value="<%=editAdmin.Name%>">
                                 <label for="name">Name</label>
                             </div>
 
                             <div class="form-group position-relative">
                                 <i class="fa fa-phone"></i>
-                                <input type="number" id="mobile" name="Mobile" required placeholder=" "
-                                    value="<%=adminData.Mobile%>">
+                                <input type="number" id="mobile" name="Mobile" placeholder=" "
+                                    value="<%=editAdmin.Mobile%>">
                                 <label for="mobile">Mobile</label>
                             </div>
 
                             <div class="form-group position-relative">
                                 <i class="fa fa-envelope"></i>
-                                <input type="email" id="email" name="Email" required placeholder=" "
-                                    value="<%=adminData.Email%>">
-                                <label for=" email">Email</label>
+                                <input type="email" id="email" name="Email" placeholder=" "
+                                    value="<%=editAdmin.Email%>">
+                                <label for="email">Email</label>
                             </div>
 
                             <div class="form-group position-relative">
                                 <i class="fa fa-camera"></i>
-                                <input type="file" id="profileImage" name="Profile_Image" accept="image/*" required
-                                    value="/Upload/<%=adminData.Profile_Image%>">
+                                <input type="file" id="profileImage" name="Profile_Image" accept="image/*"
+                                    value="/upload/<%=editAdmin.Profile_Image%>">
                                 <label for="profileImage">Profile Image</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Update Admin</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
 
                             <div class="footer-text">
-                                <p><a href="javascript:history.back()">Go Back</a></p>
+                                <p><a href="javascript:history.back()">Go Back </a></p>
                             </div>
                         </form>
     </div>
@@ -228,15 +227,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-
-        const togglePassword = document.querySelector('#togglePassword');
-        const passwordInput = document.querySelector('#password');
-
-        togglePassword.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
 
         setTimeout(() => {
 

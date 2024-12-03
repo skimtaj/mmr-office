@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "Index.js",
   "scripts": {
-    "start": "npx nodemon ./Index.js",
+    "start": "npx nodemon Index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sk Imtaj",
@@ -14,6 +14,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
     "cookies": "^0.9.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +17,12 @@
         }
 
         .hero-section {
-            background-color: #2749AD;
+            background-color: #4054B2;
             color: white;
             padding: 40px 0;
             text-align: center;
             position: relative;
-            margin-bottom: 0px
+            margin-bottom: 0;
         }
 
         .hero-section h2 {
@@ -98,120 +97,90 @@
             margin-top: 30px;
         }
 
-        .info-card {
+        .profile-section {
+            background: #13b9b2;
             color: white;
-            border-radius: 10px;
-            padding: 25px;
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: transform 0.3s;
-        }
-
-        .info-card:hover {
-            transform: scale(1.05);
-        }
-
-        .info-card .icon {
-            font-size: 2.5rem;
             padding: 20px;
-            border-radius: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1));
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        .info-card:hover .icon {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2));
-        }
-
-        .profile-card {
-            background-color: #FF6F61;
-        }
-
-        .appointment-card {
-            background-color: #4CAF50;
-        }
-
-        .doctors-card {
-            background-color: #3B5998;
-        }
-
-        .info-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .info-card p {
-            font-size: 1.5rem;
-            margin: 0;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .table-section {
-            padding: 30px;
-            margin-top: -10px;
-        }
-
-        .table-container {
-            padding: 30px;
-            background-color: #fff;
-        }
-
-        table.dataTable.no-footer {
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        table thead th {
-            border-bottom: 2px solid #dee2e6;
-
-        }
-
-        table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
-        table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
-            top: 50%;
-            left: 10px;
-            height: 15px;
-            width: 15px;
-            margin-top: -7px;
-            border: none;
+        .profile-section img {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background-color: #2749AD;
-            content: '+';
-            color: white;
-            font-size: 14px;
+            margin-bottom: 10px;
         }
+
+        .profile-section h4 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .profile-section .edit-btn {
+            background-color: #4054B2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .management-section {
+            max-width: 800px;
+            padding: 15px;
+            background-color: #e0e7ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .management-card {
+            background-color: #fff;
+            border-radius: 8px;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .management-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .management-icon {
+            font-size: 40px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .management-title a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .management-title a:hover {
+            color: #007bff;
+        }
+
+
 
         @media (max-width: 576px) {
-            .table-section {
-                padding: 10px;
+            .col-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
             }
 
-            .table-container {
-                padding: 15px;
+
+
+            .hero-section {
+                padding: 40px 15px;
             }
 
             .hero-section h2 {
-                font-size: 2rem;
-            }
-
-            .hero-section p {
-                font-size: 16px;
-            }
-
-            .dataTables_wrapper .dataTables_paginate .paginate_button {
-                padding: 0.25rem 0.5rem;
-                margin: 0 2px;
-                font-size: 15px;
-            }
-
-            .dataTables_wrapper .dataTables_filter {
-                margin-top: 0.3rem;
-                margin-bottom: 0.3rem;
+                font-size: 35px;
             }
         }
     </style>
@@ -221,7 +190,7 @@
 
     <div class="hero-section">
         <h2>Welcome to Admin Dashboard</h2>
-        <p>Plesae maintain dashboard very carefully</p>
+        <p>Please maintain the dashboard very carefully</p>
 
         <div class="floating-elements">
             <div class="floating-circle circle-1"></div>
@@ -230,141 +199,83 @@
         </div>
     </div>
 
-    <%-include ('Header') %>
-
-
-        <div class="card-section container">
-            <div class="info-card profile-card">
-                <img src="/Upload/<%=adminData.Profile_Image%>" alt="Admin Profile"
-                    style="width: 60px; height: 60px; border-radius: 50%; margin-right: 10px;">
-                <div>
-                    <h3>Admin Profile</h3>
-                    <p>
-                        <%=adminData.Name%>
-                    </p>
-                </div>
-            </div>
-            <div class="info-card appointment-card">
-                <div class="icon"><i class="fas fa-calendar-check"></i></div>
-                <div>
-                    <h3>Total Appointments</h3>
-                    <p>
-                        <%=appoinmentCount%>
-                    </p>
-                </div>
-            </div>
-            <div class="info-card doctors-card">
-                <div class="icon"><i class="fas fa-user-md"></i></div>
-                <div>
-                    <h3>Registered Doctors</h3>
-                    <p>
-                        <%=doctor%>
-                    </p>
-                </div>
-            </div>
+    <% if (messages.success) { %>
+        <div class="alert alert-success" id="msg">
+            <%= messages.success %>
         </div>
+        <% } %>
 
+            <% if (messages.error) { %>
+                <div class="alert alert-danger" id="msg">
+                    <%= messages.error %>
+                </div>
+                <% } %>
 
-        <div class="table-section">
-            <div class="container">
-                <div class="table-container">
-                    <h3>Appointments List</h3>
-                    <table id="jobTable" class="table table-striped table-bordered dt-responsive nowrap"
-                        style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Sl No</th>
-                                <th>Patient Name</th>
-                                <th>Mobile</th>
-                                <th>Email</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Message</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                    <div class="container mt-4">
+                        <div class="row">
+                            <!-- Admin Profile Column -->
+                            <div class="col-md-3">
+                                <div class="profile-section">
+                                    <img src="/upload/<%= adminSourse.Profile_Image %>" alt="Admin Profile Image">
+                                    <h4>
+                                        <%= adminSourse.Name %>
+                                    </h4>
+                                    <p>
+                                        <%= adminSourse.Email %>
+                                    </p>
+                                    <a href='/admin-edit' class="edit-btn" type="button">Edit Profile</a>
+                                </div>
+                            </div>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% appoinment.forEach(function(patient, Index) { %>
-                                <tr>
-                                    <td>
-                                        <%=Index+1%>
-                                    </td>
-
-                                    <td>
-                                        <%=patient.Patient_Name%>
-                                    </td>
-
-
-                                    <td>
-                                        <%=patient.Mobile%>
-                                    </td>
-
-
-                                    <td>
-                                        <%=patient.Email%>
-                                    </td>
-
-
-                                    <td>
-                                        <%=patient.Appointment_Date%>
-                                    </td>
-
-
-                                    <td>
-                                        <%=patient.Appointment_Time%>
-                                    </td>
-
-                                    <td>
-                                        <%=patient.Message%>
-                                    </td>
-                                    <td>
-                                        <%=patient.Status%>
-                                    </td>
-                                    <td>
-                                        <% if (patient.Status==='Pending' ) { %>
-                                            <div class="d-flex gap-2">
-
-                                                <a class="btn btn-primary" href="/accept/<%= patient._id %>"
-                                                    role="button">Accept</a>
-
-
-                                                <a class="btn btn-primary" href="/reject/<%= patient._id %>"
-                                                    role="button">Reject</a>
-
+                            <div class="col-md-9">
+                                <div class="management-section">
+                                    <div class="row g-4">
+                                        <div class="col-6 col-md-4">
+                                            <div class="management-card">
+                                                <i class="fas fa-bullhorn management-icon"></i>
+                                                <h5> <b>Notice</b></h5>
+                                                <div class="management-title"><a href='/admin-dashboard/notice'>Notice
+                                                        Management</a></div>
                                             </div>
+                                        </div>
 
-                                            <% } else { %>
-                                                <span class="badge bg-info text-white">
-                                                    <%= patient.Status %>
-                                                </span>
-                                                <% } %>
-                                    </td>
+                                        <div class="col-6 col-md-4">
+                                            <div class="management-card">
+                                                <i class="fas fa-user-graduate management-icon"></i>
+                                                <h5> <b>Total Donator : <%=totalDonator%></b></h5>
+                                                <div class="management-title"><a href='/admin-dashboard/donator'>Donator
+                                                        Management</a></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 col-md-4">
+                                            <div class="management-card">
+                                                <i class="fas fa-file-invoice-dollar management-icon"></i>
+                                                <h5> <b>Total Amount : 42</b></h5>
+                                                <div class="management-title"><a href='#'>Fees Management</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                                </tr>
-
-                                <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                            </div>
 
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-        <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#jobTable').DataTable({
-                    responsive: true,
 
-                });
-            });
-        </script>
+                        </div>
+                    </div>
+
+
 </body>
+
+<script>
+
+    setTimeout(() => {
+
+        document.getElementById('msg').style.display = 'none'
+    }, 3000)
+
+</script>
 
 </html>
