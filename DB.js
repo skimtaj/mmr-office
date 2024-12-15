@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-
-const mongourl = 'mongodb://localhost:27017/notemaster';
+const mongourl = 'mongodb+srv://imtajdatabase:Skimtaj786@note-taking-application.exeqz.mongodb.net/?retryWrites=true&w=majority&appName=note-taking-application'
+//const mongourl = 'mongodb://localhost:27017/notemaster';
 
 mongoose.connect(mongourl);
 

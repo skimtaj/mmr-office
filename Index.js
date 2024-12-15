@@ -11,6 +11,7 @@ const bcryptjs = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
 const cron = require('node-cron');
+require('dotenv').config();
 
 
 const user_signup_model = require('./Models/user_signup_model');
@@ -425,9 +426,9 @@ app.post('/reset-password/:id', async function (req, res) {
 })
 
 
+const PORT = process.env.PORT || 3000
 
-
-app.listen(3000, () => {
+app.listen(PORT, () => {
 
     console.log('Server is connected')
 })
