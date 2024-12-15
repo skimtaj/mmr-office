@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('navbar')%>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Note-Taking Dashboard</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+            integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+
+            .card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .card-buttons button {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.8rem;
+                border-radius: 5px;
+            }
+
+            .btn-edit {
+                background-color: #00a65a;
+                color: white;
+                border: none;
+            }
+
+            .btn-edit:hover {
+                background-color: #007f43;
+            }
+
+            .btn-delete {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+            }
+
+            .btn-delete:hover {
+                background-color: #a71d2a;
+            }
+
+            .small-text {
+                font-size: 0.8rem;
+                color: #6c757d;
+            }
+
+            .search-bar {
+                margin-bottom: 20px;
+            }
+
+            #noNotesMessage {
+                display: none;
+                font-size: 1.2rem;
+                color: #6c757d;
+                text-align: center;
+            }
+
+            .button-section {
+                margin-top: 20px;
+            }
+
+            .button-section .btn {
+                width: 100%;
+                text-align: center;
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+
+            .button-section .col-md-3 {
+                margin-bottom: 15px;
+            }
+
+            .bs {
+                padding: 10px 350px;
+                background-color: #F2F3F4;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            #greeting {
+                margin: 10px 0
+            }
+
+
+            .btn-outline-light {
+
+                margin-left: 10px;
+
+            }
+
+
+            @media(max-width: 576px) {
+                .bs {
+                    padding: 05px 20px;
+                }
+
+                .button-section .col-md-3,
+                .button-section .col-6 {
+                    width: 25%;
+                    padding: 5px;
+                }
+
+                .button-section .btn {
+                    padding: 5px;
+                    font-size: 0.9rem;
+                }
+
+                .button-section .btn i {
+                    font-size: 1.0rem;
+                }
+
+                .button-section .btn br {
+                    display: none;
+                }
+
+                #searchNotes {
+
+                    margin-left: 10px;
+                    margin-top: 18px;
+                }
+
+                #bi {
+
+                    margin-top: -30px;
+                }
+
+            }
+
+
+            .button-section .btn i {
+                display: block;
+                font-size: 1.5rem;
+                margin-bottom: 8px;
+            }
+
+            .button-section .btn br {
+                display: none;
+            }
+
+            .button-section .btn {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                font-size: 1rem;
+            }
+        </style>
+    </head>
+
+    <body>
+
+
+        <div class="bs">
+            <div class="button-section">
+
+
+                <div id="greeting">
+
+                    <p> Good Morninng Sk Imtaj </p>
+
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <a href="/user-dashboard/pinned-note" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-map-pin"></i>
+                            Pinned
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <button class="btn btn-outline-success">
+                            <i class="fa-solid fa-check"></i>
+                            Complete
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <button class="btn btn-outline-info">
+                            <i class="fa-solid fa-eye"></i>
+                            View
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <button class="btn btn-outline-danger">
+                            <i class="fa-solid fa-trash"></i>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <main class="container py-5">
+
+            <div class="d-flex justify-content-between align-items-center mb-4" id="bi">
+                <a href="/user-dashboard/new-note" class="btn btn-primary"> <i class="fa-solid fa-square-plus"></i> </a>
+                <input type="text" id="searchNotes" class="form-control search-bar" placeholder="Search notes..."
+                    style="width: 300px;">
+            </div>
+
+            <p id="noNotesMessage">No Notes Available</p>
+
+            <div id="notesContainer" class="row g-4">
+
+
+                <% if (messages.success) { %>
+                    <div class="alert alert-success" id="msg">
+                        <%= messages.success %>
+                    </div>
+                    <% } %>
+
+                        <% if (messages.error) { %>
+                            <div class="alert alert-danger" id="msg">
+                                <%= messages.error %>
+                            </div>
+                            <% } %>
+
+                                <% userSource.Note.forEach((note)=> { %>
+
+                                    <div class="col-md-3">
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%=note.Note_Title%>
+                                                </h5>
+                                                <p class="small-text">
+                                                    Created on: <%=note.Date%>, <%=note.Time%>
+                                                </p>
+                                                <p class="card-text">
+                                                    <%=note.Note_Description%>
+                                                </p>
+                                                <div class="card-buttons d-flex justify-content-between">
+                                                    <a href="/user-dashboard/view-note/<%=note._id%>"
+                                                        class="btn btn-edit btn-sm">Read</a>
+
+                                                    <a href="/notemaster/user-dashboard/edit-note/<%=note._id%>"
+                                                        class="btn btn-edit btn-sm">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </a>
+
+                                                    <a href='/user-dashboard/note-delete/<%=note._id%>'
+                                                        class="btn btn-delete btn-sm">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </a>
+                                                    <a href='/user-dashboard/pinned-note/<%=note._id%>'
+                                                        class="btn btn-delete btn-sm">
+                                                        Make Pin
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <% }); %>
+
+            </div>
+
+
+        </main>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function truncateText() {
+                const cardTexts = document.querySelectorAll('.card-text');
+                cardTexts.forEach(cardText => {
+                    let text = cardText.textContent;
+                    if (text.length > 30) {
+                        cardText.textContent = text.substring(0, 80) + '...';
+                    }
+                });
+            }
+            truncateText();
+
+            document.getElementById('searchNotes').addEventListener('input', function () {
+                const searchQuery = this.value.toLowerCase();
+                const notes = document.querySelectorAll('#notesContainer .col-md-3');
+                let visibleCount = 0;
+
+                notes.forEach(note => {
+                    const title = note.querySelector('.card-title').textContent.toLowerCase();
+                    const text = note.querySelector('.card-text').textContent.toLowerCase();
+
+                    if (title.includes(searchQuery) || text.includes(searchQuery)) {
+                        note.style.display = '';
+                        visibleCount++;
+                    } else {
+                        note.style.display = 'none';
+                    }
+                });
+
+                const noNotesMessage = document.getElementById('noNotesMessage');
+                if (visibleCount === 0) {
+                    noNotesMessage.style.display = 'block';
+                } else {
+                    noNotesMessage.style.display = 'none';
+                }
+            });
+
+            setTimeout(() => {
+
+                document.getElementById('msg').style.display = 'none'
+            }, 3000)
+
+
+
+
+            const greating = document.getElementById('greeting');
+
+            const currectTime = new Date().getHours();
+
+            if (currectTime >= 5 && currectTime < 12) {
+                greating.innerText = 'Good Morning'
+                greating.style.color = 'blue'
+            }
+
+            else if (currectTime >= 12 && currectTime < 16) {
+                greating.innerText = 'Good Noon'
+                greating.style.color = 'Yellow'
+            }
+
+            else if (currectTime >= 16 && currectTime < 18) {
+                greating.innerText = 'Good Evening'
+                greating.style.color = 'Red'
+            }
+
+            else if (currectTime >= 18 && currectTime < 24) {
+                greating.innerText = 'Good Night'
+                greating.style.color = 'black'
+            }
+
+            else {
+                greating.innerText = 'Good Night'
+                greating.style.color = 'black'
+            }
+
+
+        </script>
+    </body>
+
+</html>

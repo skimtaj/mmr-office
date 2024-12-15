@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-const mongourl = 'mongodb+srv://dpsdatabase:Skimtaj786@dps.wwxxg.mongodb.net/'
 
-//const mongourl = 'mongodb://localhost:27017/DPS_Project';
+const mongourl = 'mongodb://localhost:27017/notemaster';
 
 mongoose.connect(mongourl);
 
