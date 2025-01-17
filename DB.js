@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const mongourl = 'mongodb://localhost:27017/mmr-office';
+const mongourl = 'mongodb+srv://imtajdatabase:Skimtaj786@mmroffice.hxcc6.mongodb.net/?retryWrites=true&w=majority&appName=mmroffice'
+//const mongourl = 'mongodb://localhost:27017/mmr-office';
 
 mongoose.connect(mongourl);
 
