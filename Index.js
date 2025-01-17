@@ -72,7 +72,7 @@ const adminAuth = (req, res, next) => {
 }
 
 app.get('/mmr-office', function (req, res) {
-    res.render('../views/mmr-office')
+    res.render('../Views/mmr-office')
 })
 
 
@@ -85,7 +85,7 @@ app.get('/logout', async function (req, res) {
 
 
 app.get('/mmr-office/admin-signup', function (req, res) {
-    res.render('../views/admin-signup')
+    res.render('../Views/admin-signup')
 })
 
 app.post('/mmr-office/admin-signup', upload.single('Profile_Image'), async function (req, res) {
@@ -124,7 +124,7 @@ app.post('/mmr-office/admin-signup', upload.single('Profile_Image'), async funct
 
 
 app.get('/mmr-office/admin-login', function (req, res) {
-    res.render('../views/admin-login')
+    res.render('../Views/admin-login')
 })
 
 app.post('/mmr-office/admin-login', async function (req, res) {
@@ -174,7 +174,7 @@ app.get('/mmr-office/admin-dashboard', adminAuth, async function (req, res) {
 
     const totalAdmin = admin_signup.length;
 
-    res.render('../views/admin-dashboard', { adminSourse, totalCertificate, totalAdmin })
+    res.render('../Views/admin-dashboard', { adminSourse, totalCertificate, totalAdmin })
 })
 
 app.get('/mmr-office/admin-profile', adminAuth, async function (req, res) {
@@ -182,7 +182,7 @@ app.get('/mmr-office/admin-profile', adminAuth, async function (req, res) {
     const adminID = req.adminId;
     const adminSourse = await admin_signup.findById(adminID)
 
-    res.render('../views/admin-profile', { adminSourse })
+    res.render('../Views/admin-profile', { adminSourse })
 })
 
 
@@ -191,7 +191,7 @@ app.get('/mmr-office/edit-profile', adminAuth, async function (req, res) {
     const adminID = req.adminId;
     const adminSourse = await admin_signup.findById(adminID);
 
-    res.render('../views/edit-admin', { adminSourse })
+    res.render('../Views/edit-admin', { adminSourse })
 })
 
 app.post('/mmr-office/edit-profile', adminAuth, upload.single('Profile_Image'), async function (req, res) {
@@ -217,7 +217,7 @@ app.post('/mmr-office/edit-profile', adminAuth, upload.single('Profile_Image'), 
 app.get('/mmr-office/add-certificate', adminAuth, async function (req, res) {
 
 
-    res.render('../views/add-certificate',)
+    res.render('../Views/add-certificate',)
 })
 
 app.post('/mmr-office/add-certificate', adminAuth, async function (req, res) {
@@ -309,7 +309,7 @@ app.get('/mmr-office/edit-certificate/:id', async function (req, res) {
 
     const certificateSourse = await mmr_certificate.findById(req.params.id)
 
-    res.render('../views/edit-certificate', { certificateSourse })
+    res.render('../Views/edit-certificate', { certificateSourse })
 })
 
 app.post('/mmr-office/edit-certificate/:id', async function (req, res) {
@@ -335,7 +335,7 @@ app.get('/mmr-office/edit-payment/:id', async function (req, res) {
 
 app.get('/mmr-office/admin-login/forget-password', async function (req, res) {
 
-    res.render('../views/forget-password')
+    res.render('../Views/forget-password')
 })
 
 app.post('/mmr-office/admin-login/forget-password', async function (req, res) {
@@ -386,7 +386,7 @@ app.post('/mmr-office/admin-login/forget-password', async function (req, res) {
 
 app.get('/mmr-office/admin-login/reset-password/:id', async function (req, res) {
 
-    res.render('../views/reset-password')
+    res.render('../Views/reset-password')
 })
 
 app.post('/mmr-office/admin-login/reset-password/:id', async function (req, res) {
